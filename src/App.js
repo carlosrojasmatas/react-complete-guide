@@ -1,8 +1,6 @@
 import React, { useState,setState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
 
 const App = ( props ) =>  {
   const [personState, setPersonState]= useState(
@@ -71,22 +69,23 @@ const App = ( props ) =>  {
       //   }
       // };
 
-      const StyledButton = styled.button`
-            background-color: ${props => props.state ? 'red':'green'};
-            color: white;
-            font: inherit;
-            border: 1px solid blue;
-            padding: 8px;
-            cursor: pointer;
+      // const StyledButton = styled.button`
+      //       background-color: ${props => props.state ? 'red':'green'};
+      //       color: white;
+      //       font: inherit;
+      //       border: 1px solid blue;
+      //       padding: 8px;
+      //       cursor: pointer;
 
-            &:hover {
-              background-color: ${props => props.state ? 'salmon':'lightgreen'};
-              color: black;
-            }
-      `
+      //       &:hover {
+      //         background-color: ${props => props.state ? 'salmon':'lightgreen'};
+      //         color: black;
+      //       }
+      // `
 
 
-      
+      let btnClass = "";
+
       const evalPersons = () => {
         let personsDiv = null;
         if(personState.showPersons){
@@ -94,12 +93,11 @@ const App = ( props ) =>  {
             <div>
             {personState.persons.map((per,idx) => {
               return <Person 
-              name={per.name} 
-              age = {per.age}
-              deleteHandler = {() => deletePersonHandler(idx)}
-              changeName = {(event) => nameChangeHandler(event,per.id)}
-              key={per.id}>I play futbol
-              
+                  name={per.name} 
+                  age = {per.age}
+                  deleteHandler = {() => deletePersonHandler(idx)}
+                  changeName = {(event) => nameChangeHandler(event,per.id)}
+                  key={per.id}>I play futbol
               </Person>
             })}
             </div>
@@ -109,27 +107,33 @@ const App = ( props ) =>  {
             //   backgroundColor: 'salmon',
             //   color: 'black'
             // }
+            
           }
           
           return personsDiv;
         }
 
-        // let classes= [];
+        let assignedClasses= [];
         
-        // if(personState.persons.length <= 2){
-        //   classes.push('red');
-        // }
+        if(personState.persons.length <= 2){
+          assignedClasses.push(classes.red);
+        }
 
-        // if(personState.persons.length <= 1){
-        //   classes.push('bold');
-        // }
+        if(personState.persons.length <= 1){
+          assignedClasses.push(classes.bold);
+        }
 
+        if(personState.showPersons){
+          btnClass= classes.Red;
+        }
+        
         return(
-              <div className="App">
+              <div className={classes.App}>
                 <h1>I'm a react app</h1>
-                <StyledButton state={personState.showPersons} onClick={togglePersonsHandler}>
+                <p className={assignedClasses.join(' ')}>This is really working</p>
+                <button className={btnClass} onClick={togglePersonsHandler}>
                   Toggle persons
-                </StyledButton>
+                </button>
                 {evalPersons()}
               </div>
           );
