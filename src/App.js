@@ -2,7 +2,7 @@ import React, { useState,setState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person';
-import Radium,{StyleRoot} from 'radium';
+import styled from 'styled-components';
 
 const App = ( props ) =>  {
   const [personState, setPersonState]= useState(
@@ -58,18 +58,34 @@ const App = ( props ) =>  {
         showPersons:!currState});
       }
       
-      const buttonStyle = {
-        backgroundColor: 'green',
-        color:'white',
-        font: 'inherit',
-        border: '1px solid blue',
-        padding: '8px',
-        cursor: 'pointer',
-        ':hover':{
-          backgroundColor: 'lightgreen',
-          color: 'black'
-        }
-      };
+      // const buttonStyle = {
+      //   backgroundColor: 'green',
+      //   color:'white',
+      //   font: 'inherit',
+      //   border: '1px solid blue',
+      //   padding: '8px',
+      //   cursor: 'pointer',
+      //   ':hover':{
+      //     backgroundColor: 'lightgreen',
+      //     color: 'black'
+      //   }
+      // };
+
+      const StyledButton = styled.button`
+            background-color: ${props => props.state ? 'red':'green'};
+            color: white;
+            font: inherit;
+            border: 1px solid blue;
+            padding: 8px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: ${props => props.state ? 'salmon':'lightgreen'};
+              color: black;
+            }
+      `
+
+
       
       const evalPersons = () => {
         let personsDiv = null;
@@ -88,40 +104,37 @@ const App = ( props ) =>  {
             })}
             </div>
             );
-            buttonStyle.backgroundColor='red';
-            buttonStyle[':hover'] = {
-              backgroundColor: 'salmon',
-              color: 'black'
-            }
+            // buttonStyle.backgroundColor='red';
+            // buttonStyle[':hover'] = {
+            //   backgroundColor: 'salmon',
+            //   color: 'black'
+            // }
           }
           
           return personsDiv;
         }
 
-        let classes= [];
+        // let classes= [];
         
-        if(personState.persons.length <= 2){
-          classes.push('red');
-        }
+        // if(personState.persons.length <= 2){
+        //   classes.push('red');
+        // }
 
-        if(personState.persons.length <= 1){
-          classes.push('bold');
-        }
+        // if(personState.persons.length <= 1){
+        //   classes.push('bold');
+        // }
 
         return(
-            <StyleRoot>
               <div className="App">
                 <h1>I'm a react app</h1>
-                <p className={classes.join(' ')}>This is working</p>
-                <button 
-                  style={buttonStyle}  
-                  onClick={togglePersonsHandler}>Toggle persons</button>
+                <StyledButton state={personState.showPersons} onClick={togglePersonsHandler}>
+                  Toggle persons
+                </StyledButton>
                 {evalPersons()}
               </div>
-            </StyleRoot>
           );
           
         }
         
-export default Radium(App);
+export default App;
         
